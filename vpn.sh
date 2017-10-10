@@ -11,10 +11,10 @@
 #       AUTH_ID, identifier of your authentication certificate in the URL of Object
 #       PATH_SCLIB, path to the security lib you need
 # Example:
-#       sudo sh vpn.sh https://mycompany.com CompanyName Authentication
+#       sudo sh vpn.sh https://mycompany.com CompanyName Authentication /usr/lib/x86_64-linux-gnu/pkcs11/opensc-pkcs11.so
 #
 
-# set vpn server, system path to libcvP11 and opensc.module
+# vpn server, SmartCard TOKEN and AUTH certificate identifiers, auth library and opensc.module
 VPN_SERVER=$1
 TOKEN_ID=$2
 AUTH_ID=$3
