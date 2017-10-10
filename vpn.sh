@@ -12,6 +12,8 @@
 #       PATH_SCLIB, path to the security lib you need
 # Example:
 #       sudo sh vpn.sh https://mycompany.com CompanyName Authentication /usr/lib/x86_64-linux-gnu/pkcs11/opensc-pkcs11.so
+# Suggestions:
+#       You can encode the four arguments into this file for your daily use
 #
 
 # vpn server, SmartCard TOKEN and AUTH certificate identifiers, auth library and opensc.module
@@ -41,8 +43,12 @@ check_p11tool () {
 
 # check whether module exists in opensc.module
 set_smartcard_lib () {
+    # if opensc.module not exist
+    if ! test -e "$OPENSC_MODULE";then
+        echo "Create $OPENSC_MODULE and add $PATH_SCLIB"
+        echo "module:$PATH_SCLIB" >> $OPENSC_MODULE
     # if authentication library is not in opensc.module
-    if grep -Fxq PATH_SCLIB $OPENSC_MODULE; then
+    elif ! grep -q $PATH_SCLIB $OPENSC_MODULE;then
         echo "Add $PATH_SCLIB to $OPENSC_MODULE"
         echo "module:$PATH_SCLIB" >> $OPENSC_MODULE
     fi
@@ -70,4 +76,6 @@ if [ ! -z "$TOKEN_URL" ]; then
     get_auth_cert
     # connect to vpn server
     tail -f `sudo openconnect -c $AUTH_OBJ $VPN_SERVER --no-cert-check`
+else
+    echo "Token $TOKEN_ID Not Found in URL"
 fi
