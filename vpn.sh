@@ -41,8 +41,8 @@ check_p11tool () {
 
 # check whether module exists in opensc.module
 set_smartcard_lib () {
-    # if libcvP11 is not in opensc.module
-    if grep -Fxq libcvP11 $OPENSC_MODULE; then
+    # if authentication library is not in opensc.module
+    if grep -Fxq PATH_SCLIB $OPENSC_MODULE; then
         echo "Add $PATH_SCLIB to $OPENSC_MODULE"
         echo "module:$PATH_SCLIB" >> $OPENSC_MODULE
     fi
