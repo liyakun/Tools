@@ -4,11 +4,12 @@
 # Additionally, you need to have OpenConnect and p11tool installed
 #
 # Usage:
-#       sudo sh vpn.sh VPN_SERVER TOKEN_ID AUTH_ID
+#       sudo sh vpn.sh VPN_SERVER TOKEN_ID AUTH_ID PATH_SCLIB
 # Arguments:
 #       VPN_SERVER, name of vpn server
 #       TOKEN_ID, token identifier of your SmartCard appears in the URL of Token
 #       AUTH_ID, identifier of your authentication certificate in the URL of Object
+#       PATH_SCLIB, path to the security lib you need
 # Example:
 #       sudo sh vpn.sh https://mycompany.com CompanyName Authentication
 #
@@ -17,7 +18,7 @@
 VPN_SERVER=$1
 TOKEN_ID=$2
 AUTH_ID=$3
-PATH_LIBCVP11='/usr/local/lib/libcvP11.so'
+PATH_SCLIB=$4
 OPENSC_MODULE='/usr/share/p11-kit/modules/opensc.module'
 
 echo "Connect $VPN_SERVER"
@@ -42,8 +43,8 @@ check_p11tool () {
 set_smartcard_lib () {
     # if libcvP11 is not in opensc.module
     if grep -Fxq libcvP11 $OPENSC_MODULE; then
-        echo "Add $PATH_LIBCVP11 to $OPENSC_MODULE"
-        echo "module:$PATH_LIBCVP11" >> $OPENSC_MODULE
+        echo "Add $PATH_SCLIB to $OPENSC_MODULE"
+        echo "module:$PATH_SCLIB" >> $OPENSC_MODULE
     fi
 }
 
