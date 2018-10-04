@@ -75,7 +75,7 @@ if [ ! -z "$TOKEN_URL" ]; then
     # get auth certificate
     get_auth_cert
     # connect to vpn server
-    tail -f `sudo openconnect -c $AUTH_OBJ $VPN_SERVER --no-cert-check`
+    tail -f `sudo openconnect -c $AUTH_OBJ $VPN_SERVER`
 else
     echo "Token $TOKEN_ID Not Found in URL"
 fi
